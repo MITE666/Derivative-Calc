@@ -80,7 +80,7 @@ endfunction()
 ###############################################################################
 
 # NOTE: update executable name in .github/workflows/cmake.yml:25 when changing name here
-add_executable(${PROJECT_NAME} main.cpp)
+add_executable(${PROJECT_NAME} main.cpp Expression.h Expression.cpp Node.h Node.cpp IntNode.h IntNode.cpp Tree.h Tree.cpp FloatNode.h FloatNode.cpp StringNode.cpp StringNode.h)
 
 ###############################################################################
 
