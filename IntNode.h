@@ -9,6 +9,7 @@ private:
 public:
     IntNode(int data_);
     std::shared_ptr<Node> clone() const override;
+    ~IntNode();
 };
 
 

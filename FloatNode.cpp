@@ -1,6 +1,6 @@
 #include "FloatNode.h"
 
-FloatNode::FloatNode(float data_) : Node(&data_) {}
+FloatNode::FloatNode(float data_) : Node(new float(data_)) {}
 
 void FloatNode::printNode(std::ostream &os) const {
     os << *(float*)data << " ";
@@ -8,4 +8,8 @@ void FloatNode::printNode(std::ostream &os) const {
 
 std::shared_ptr<Node> FloatNode::clone() const {
     return std::make_shared<FloatNode>(*this);
+}
+
+FloatNode::~FloatNode() {
+    delete static_cast<float*>(data);
 }

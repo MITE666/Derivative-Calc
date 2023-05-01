@@ -16,13 +16,13 @@ private:
     std::queue<std::shared_ptr<Node>> queue;
     std::shared_ptr<Node> root;
     std::map<std::string, int> priority = {
-            std::make_pair("+", 0), std::make_pair("-", 0),
-            std::make_pair("*", 1), std::make_pair("/", 1),
-            std::make_pair("^", 2), std::make_pair("sin", 3),
-            std::make_pair("cos", 3), std::make_pair("tan", 3),
-            std::make_pair("cot", 3), std::make_pair("arcsin", 3),
-            std::make_pair("arccos", 3), std::make_pair("arctan", 3),
-            std::make_pair("arccot", 3), std::make_pair("ln", 3)
+            std::make_pair("+\0", 0), std::make_pair("-\0", 0),
+            std::make_pair("*\0", 1), std::make_pair("/\0", 1),
+            std::make_pair("^\0", 2), std::make_pair("sin\0", 3),
+            std::make_pair("cos\0", 3), std::make_pair("tan\0", 3),
+            std::make_pair("cot\0", 3), std::make_pair("arcsin\0", 3),
+            std::make_pair("arccos\0", 3), std::make_pair("arctan\0", 3),
+            std::make_pair("arccot\0", 3), std::make_pair("ln\0", 3)
     };
     [[nodiscard]] static bool isInt(const std::string& elem) ;
     [[nodiscard]] static bool isFloat(const std::string& elem);

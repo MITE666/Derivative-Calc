@@ -22,19 +22,21 @@ Tree::Tree(std::string &expression_) : expression(std::move(expression_)) {
         } else {
             std::shared_ptr<Node> ptr;
             ptr = std::make_shared<StringNode>(elem);
-            if(ptr->data == "(") {
+            if(*(std::string*)ptr->data == "(\0") {
                 newStack.push(ptr);
-            } else if(ptr->data == ")") {
-                while(newStack.top()->data != "(") {
+            } else if(*(std::string*)ptr->data == ")\0") {
+                while(*(std::string*)newStack.top()->data != "(\0") {
                     queue.push(newStack.top());
                     newStack.pop();
                 }
                 newStack.pop();
             } else if(priority.count(*(std::string*)ptr->data)){
                 if(!newStack.empty())
-                    while((!newStack.empty() || newStack.top()->data != "(") && priority[*(std::string*)ptr->data] <= priority[*(std::string*)newStack.top()->data]) {
+                    while((!newStack.empty() || *(std::string*)newStack.top()->data != "(\0") && priority[*(std::string*)ptr->data] <= priority[*(std::string*)newStack.top()->data]) {
                         queue.push(newStack.top());
                         newStack.pop();
+                        if(newStack.empty())
+                            break;
                     }
                 newStack.push(ptr);
             } else {
@@ -105,7 +107,7 @@ void Tree::Convert(std::queue<std::shared_ptr<Node>> queue_) {
 void Tree::PrintQueue() {
     while(!queue.empty()) {
         std::shared_ptr<Node> ptr = queue.front();
-        std::cout << ptr << " ";
+        std::cout << *ptr;
         queue.pop();
     }
 }

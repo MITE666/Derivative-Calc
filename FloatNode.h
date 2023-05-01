@@ -9,6 +9,7 @@ private:
 public:
     FloatNode(float data_);
     std::shared_ptr<Node> clone() const override;
+    ~FloatNode();
 };
 
 
