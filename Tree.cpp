@@ -32,7 +32,7 @@ Tree::Tree(std::string &expression_) : expression(std::move(expression_)) {
                 newStack.pop();
             } else if(priority.count(*(std::string*)ptr->data)){
                 if(!newStack.empty())
-                    while((!newStack.empty() || *(std::string*)newStack.top()->data != "(\0") && priority[*(std::string*)ptr->data] <= priority[*(std::string*)newStack.top()->data]) {
+                    while(!newStack.empty() && *(std::string*)newStack.top()->data != "(\0" && priority[*(std::string*)ptr->data] <= priority[*(std::string*)newStack.top()->data]) {
                         queue.push(newStack.top());
                         newStack.pop();
                         if(newStack.empty())
@@ -48,6 +48,7 @@ Tree::Tree(std::string &expression_) : expression(std::move(expression_)) {
         queue.push(newStack.top());
         newStack.pop();
     }
+    Convert(queue);
 }
 
 bool Tree::isInt(const std::string& elem) {
@@ -77,12 +78,12 @@ void Tree::Convert(std::queue<std::shared_ptr<Node>> queue_) {
     while(!queue_.empty()) {
         std::shared_ptr<Node> ptr = queue_.front();
         queue_.pop();
-        std::shared_ptr<IntNode> int_ptr = std::dynamic_pointer_cast<IntNode>(ptr);
-        std::shared_ptr<FloatNode> float_ptr = std::dynamic_pointer_cast<FloatNode>(ptr);
+        std::shared_ptr<Node> int_ptr = std::dynamic_pointer_cast<IntNode>(ptr);
+        std::shared_ptr<Node> float_ptr = std::dynamic_pointer_cast<FloatNode>(ptr);
         if(int_ptr || float_ptr) {
             stack.push(ptr);
         } else {
-            if(ptr->data == "+" || ptr->data == "-" || ptr->data == "/" || ptr->data == "*" || ptr->data == "^") {
+            if(std::count(binaryOp.begin(), binaryOp.end(), *(std::string*)ptr->data)) {
                 std::shared_ptr<Node> right_ptr = stack.top();
                 stack.pop();
                 std::shared_ptr<Node> left_ptr = stack.top();
@@ -90,7 +91,7 @@ void Tree::Convert(std::queue<std::shared_ptr<Node>> queue_) {
                 ptr->right = right_ptr;
                 ptr->left = left_ptr;
                 stack.push(ptr);
-            } else if(ptr->data == "sin" || ptr->data == "cos" || ptr->data == "tan" || ptr->data == "cot" || ptr->data == "ln" || ptr->data == "arcsin" || ptr->data == "arccos" || ptr->data == "arctan" || ptr->data == "arccot") {
+            } else if(std::count(unaryOp.begin(), unaryOp.end(), *(std::string*)ptr->data)) {
                 std::shared_ptr<Node> new_ptr = stack.top();
                 stack.pop();
                 ptr->right = new_ptr;
@@ -109,5 +110,19 @@ void Tree::PrintQueue() {
         std::shared_ptr<Node> ptr = queue.front();
         std::cout << *ptr;
         queue.pop();
+    }
+}
+
+void Tree::PrintTree() {
+    std::queue<std::shared_ptr<Node>> newQueue;
+    newQueue.push(root);
+    while(!newQueue.empty()) {
+        std::shared_ptr<Node> ptr = newQueue.front();
+        std::cout << *newQueue.front();
+        if(newQueue.front()->left != nullptr)
+            newQueue.push(newQueue.front()->left);
+        if(newQueue.front()->right != nullptr)
+            newQueue.push(newQueue.front()->right);
+        newQueue.pop();
     }
 }

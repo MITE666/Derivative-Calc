@@ -24,6 +24,12 @@ private:
             std::make_pair("arccos\0", 3), std::make_pair("arctan\0", 3),
             std::make_pair("arccot\0", 3), std::make_pair("ln\0", 3)
     };
+    std::vector<std::string> binaryOp = {
+            "+\0", "-\0", "/\0", "*\0", "^\0"
+    };
+    std::vector<std::string> unaryOp = {
+            "sin\0", "cos\0", "tan\0", "cot\0", "arcsin\0", "arccos\0", "arctan\0", "arccot\0", "ln\0"
+    };
     [[nodiscard]] static bool isInt(const std::string& elem) ;
     [[nodiscard]] static bool isFloat(const std::string& elem);
 
@@ -31,6 +37,7 @@ public:
     explicit Tree(std::string &expression_);
     void Convert(std::queue<std::shared_ptr<Node>> queue_);
     void PrintQueue();
+    void PrintTree();
 };
 
 
