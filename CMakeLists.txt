@@ -80,7 +80,7 @@ endfunction()
 ###############################################################################
 
 # NOTE: update executable name in .github/workflows/cmake.yml:25 when changing name here
-add_executable(${PROJECT_NAME} main.cpp Expression.h Expression.cpp Node.h Node.cpp IntNode.h IntNode.cpp Tree.h Tree.cpp FloatNode.h FloatNode.cpp StringNode.cpp StringNode.h)
+add_executable(${PROJECT_NAME} main.cpp Operations/Expression.h Operations/Expression.cpp Node/Node.h Node/Node.cpp Node/IntNode.h Node/IntNode.cpp Tree.h Tree.cpp Node/FloatNode.h Node/FloatNode.cpp Node/StringNode.cpp Node/StringNode.h Operations/Constant.cpp Operations/Constant.h Operations/Variable.cpp Operations/Variable.h Operations/Addition.cpp Operations/Addition.h Operations/Subtraction.cpp Operations/Subtraction.h Operations/Multiplication.cpp Operations/Multiplication.h Operations/Division.cpp Operations/Division.h Operations/Logarithm.cpp Operations/Logarithm.h Operations/Power.cpp Operations/Power.h Operations/Sinus.cpp Operations/Sinus.h Operations/Cosinus.cpp Operations/Cosinus.h Operations/Tangent.cpp Operations/Tangent.h Operations/Cotangent.cpp Operations/Cotangent.h Operations/Arcsinus.cpp Operations/Arcsinus.h Operations/Arccosinus.cpp Operations/Arccosinus.h Operations/Arctangent.cpp Operations/Arctangent.h Operations/Arccotangent.cpp Operations/Arccotangent.h)
 
 ###############################################################################
 

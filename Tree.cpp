@@ -105,24 +105,7 @@ void Tree::Convert(std::queue<std::shared_ptr<Node>> queue_) {
     stack.pop();
 }
 
-void Tree::PrintQueue() {
-    while(!queue.empty()) {
-        std::shared_ptr<Node> ptr = queue.front();
-        std::cout << *ptr;
-        queue.pop();
-    }
-}
-
-void Tree::PrintTree() {
-    std::queue<std::shared_ptr<Node>> newQueue;
-    newQueue.push(root);
-    while(!newQueue.empty()) {
-        std::shared_ptr<Node> ptr = newQueue.front();
-        std::cout << *newQueue.front();
-        if(newQueue.front()->left != nullptr)
-            newQueue.push(newQueue.front()->left);
-        if(newQueue.front()->right != nullptr)
-            newQueue.push(newQueue.front()->right);
-        newQueue.pop();
-    }
+std::ostream &operator<<(std::ostream &os, const Tree &tree_) {
+    os << *tree_.root;
+    return os;
 }
