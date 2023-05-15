@@ -1,16 +1,15 @@
-#ifndef OOP_INTNODE_H
-#define OOP_INTNODE_H
+#ifndef OOP_FLOATNODE_H
+#define OOP_FLOATNODE_H
 
 #include "Node.h"
 
-class IntNode : public Node {
+class FloatNode : public Node{
 private:
     void printNode(std::ostream &os) const override;
 public:
-    IntNode(int data_);
+    FloatNode(float data_);
     std::shared_ptr<Node> clone() const override;
-    ~IntNode();
 };
 
 
-#endif //OOP_INTNODE_H
+#endif //OOP_FLOATNODE_H

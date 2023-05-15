@@ -1,7 +1,7 @@
 #ifndef OOP_EXPRESSION_H
 #define OOP_EXPRESSION_H
 
-#include "../Node/Node.h"
+#include "../../Node/Headers/Node.h"
 #include <memory>
 
 class Expression {

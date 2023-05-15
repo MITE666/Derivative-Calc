@@ -1,20 +1,20 @@
 #include "Tree.h"
-#include "Operations/Addition.h"
-#include "Operations/Arccosinus.h"
-#include "Operations/Arccotangent.h"
-#include "Operations/Arcsinus.h"
-#include "Operations/Arctangent.h"
-#include "Operations/Constant.h"
-#include "Operations/Cosinus.h"
-#include "Operations/Cotangent.h"
-#include "Operations/Division.h"
-#include "Operations/Logarithm.h"
-#include "Operations/Multiplication.h"
-#include "Operations/Power.h"
-#include "Operations/Sinus.h"
-#include "Operations/Subtraction.h"
-#include "Operations/Tangent.h"
-#include "Operations/Variable.h"
+#include "Operations/Headers/Addition.h"
+#include "Operations/Headers/Arccosinus.h"
+#include "Operations/Headers/Arccotangent.h"
+#include "Operations/Headers/Arcsinus.h"
+#include "Operations/Headers/Arctangent.h"
+#include "Operations/Headers/Constant.h"
+#include "Operations/Headers/Cosinus.h"
+#include "Operations/Headers/Cotangent.h"
+#include "Operations/Headers/Division.h"
+#include "Operations/Headers/Logarithm.h"
+#include "Operations/Headers/Multiplication.h"
+#include "Operations/Headers/Power.h"
+#include "Operations/Headers/Sinus.h"
+#include "Operations/Headers/Subtraction.h"
+#include "Operations/Headers/Tangent.h"
+#include "Operations/Headers/Variable.h"
 
 std::shared_ptr<Expression> ExpressionType(std::shared_ptr<Node>& ptr) {
     std::shared_ptr<Node> int_node = std::dynamic_pointer_cast<IntNode>(ptr);
@@ -60,7 +60,7 @@ int main() {
     std::cout << "In baza carei variabile doriti sa derivati?\n";
     std::cin >> variable;
     Tree expression = Tree(expr);
-    std::cout << expression << "\n";
+    //std::cout << expression << "\n";
     std::shared_ptr<Expression> deriv = ExpressionType(expression.root);
     deriv->Differentiate(variable);
     std::cout << *expression.root;

@@ -2,7 +2,7 @@
 #define OOP_CONSTANT_H
 
 #include "Expression.h"
-#include "../Node/IntNode.h"
+#include "../../Node/Headers/IntNode.h"
 
 class Constant : public Expression {
 public:

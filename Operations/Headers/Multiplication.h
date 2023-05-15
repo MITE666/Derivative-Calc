@@ -2,7 +2,7 @@
 #define OOP_MULTIPLICATION_H
 
 #include "Expression.h"
-#include "../Node/StringNode.h"
+#include "../../Node/Headers/StringNode.h"
 
 extern std::shared_ptr<Expression> ExpressionType(std::shared_ptr<Node>& ptr);
 

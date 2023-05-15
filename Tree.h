@@ -1,9 +1,9 @@
 #ifndef OOP_TREE_H
 #define OOP_TREE_H
 
-#include "Node/IntNode.h"
-#include "Node/FloatNode.h"
-#include "Node/StringNode.h"
+#include "Node/Headers/IntNode.h"
+#include "Node/Headers/FloatNode.h"
+#include "Node/Headers/StringNode.h"
 #include <queue>
 #include <stack>
 #include <sstream>

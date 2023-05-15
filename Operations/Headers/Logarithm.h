@@ -2,6 +2,9 @@
 #define OOP_LOGARITHM_H
 
 #include "Expression.h"
+#include "../../Node/Headers/StringNode.h"
+
+extern std::shared_ptr<Expression> ExpressionType(std::shared_ptr<Node>& ptr);
 
 class Logarithm : public Expression {
 public:

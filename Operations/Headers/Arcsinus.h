@@ -2,6 +2,11 @@
 #define OOP_ARCSINUS_H
 
 #include "Expression.h"
+#include "../../Node/Headers/StringNode.h"
+#include "../../Node/Headers/IntNode.h"
+#include "../../Node/Headers//FloatNode.h"
+
+extern std::shared_ptr<Expression> ExpressionType(std::shared_ptr<Node>& ptr);
 
 class Arcsinus :public Expression {
 public:

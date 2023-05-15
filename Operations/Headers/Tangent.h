@@ -2,6 +2,10 @@
 #define OOP_TANGENT_H
 
 #include "Expression.h"
+#include "../../Node/Headers/StringNode.h"
+#include "../../Node/Headers/IntNode.h"
+
+extern std::shared_ptr<Expression> ExpressionType(std::shared_ptr<Node>& ptr);
 
 class Tangent : public Expression {
 public:

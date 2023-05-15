@@ -1,4 +1,4 @@
-#include "Division.h"
+#include "Headers/Division.h"
 
 Division::Division(std::shared_ptr<Node>& exp_) : Expression(exp_) {}
 
@@ -13,9 +13,9 @@ void Division::Differentiate(std::string &var) {
     new_exp->left = std::make_shared<StringNode>("-");
     new_exp->left->left = std::make_shared<StringNode>("*");
     new_exp->left->right = std::make_shared<StringNode>("*");
-    new_exp->right = std::make_shared<StringNode>("*");
+    new_exp->right = std::make_shared<StringNode>("^");
     new_exp->right->left = right;
-    new_exp->right->right = right;
+    new_exp->right->right = std::make_shared<IntNode>(2);
     new_exp->left->left->right = right;
     new_exp->left->right->left = left;
     new_exp->left->left->left = exp->left;

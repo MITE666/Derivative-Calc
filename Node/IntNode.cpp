@@ -1,4 +1,4 @@
-#include "IntNode.h"
+#include "Headers/IntNode.h"
 
 IntNode::IntNode(int data_) : Node(new int(data_)) {}
 
@@ -8,8 +8,4 @@ void IntNode::printNode(std::ostream &os) const {
 
 std::shared_ptr<Node> IntNode::clone() const {
     return std::make_shared<IntNode>(*this);
-}
-
-IntNode::~IntNode() {
-    delete static_cast<int*>(data);
 }

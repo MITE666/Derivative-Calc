@@ -9,7 +9,6 @@ private:
 public:
     StringNode(const std::string &data_);
     std::shared_ptr<Node> clone() const override;
-    ~StringNode();
 };
 
 
