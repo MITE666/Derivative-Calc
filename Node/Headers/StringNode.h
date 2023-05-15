@@ -7,8 +7,8 @@ class StringNode : public Node {
 private:
     void printNode(std::ostream &os) const override;
 public:
-    StringNode(const std::string &data_);
-    std::shared_ptr<Node> clone() const override;
+    explicit StringNode(const std::string &data_);
+    [[nodiscard]] std::shared_ptr<Node> clone() const override;
 };
 
 

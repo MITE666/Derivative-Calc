@@ -12,9 +12,9 @@ public:
     void* data;
     std::shared_ptr<Node> left;
     std::shared_ptr<Node> right;
-    Node(void* data_);
+    explicit Node(void* data_);
     friend std::ostream &operator<<(std::ostream &os, const Node& node_);
-    virtual std::shared_ptr<Node> clone() const = 0;
+    [[nodiscard]] virtual std::shared_ptr<Node> clone() const = 0;
     virtual ~Node() = default;
 };
 

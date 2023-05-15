@@ -7,8 +7,8 @@ class FloatNode : public Node{
 private:
     void printNode(std::ostream &os) const override;
 public:
-    FloatNode(float data_);
-    std::shared_ptr<Node> clone() const override;
+    explicit FloatNode(float data_);
+    [[nodiscard]] std::shared_ptr<Node> clone() const override;
 };
 
 

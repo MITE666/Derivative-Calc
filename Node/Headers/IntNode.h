@@ -7,8 +7,8 @@ class IntNode : public Node {
 private:
     void printNode(std::ostream &os) const override;
 public:
-    IntNode(int data_);
-    std::shared_ptr<Node> clone() const override;
+    explicit IntNode(int data_);
+    [[nodiscard]] std::shared_ptr<Node> clone() const override;
 };
 
 
