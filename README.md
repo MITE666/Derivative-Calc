@@ -55,3 +55,9 @@
 ## Resurse
 
 - adăugați trimiteri către resursele externe care v-au ajutat sau pe care le-ați folosit
+
+
+## This program differentiates a function from the input.
+
+### Note that the function must have space after each operation, parentheses or number.
+### And you can write the variable that you want to differentiate by.
