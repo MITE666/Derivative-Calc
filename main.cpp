@@ -58,7 +58,7 @@ int main() {
     std::string expr, variable;
     std::getline(std::cin, expr);
     std::cout << "In baza carei variabile doriti sa derivati?\n";
-    std::cin >> variable;
+    std::getline(std::cin, variable);
     Tree expression = Tree(expr);
     //std::cout << expression << "\n";
     std::shared_ptr<Expression> deriv = ExpressionType(expression.root);
