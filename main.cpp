@@ -64,5 +64,12 @@ int main() {
     std::shared_ptr<Expression> deriv = ExpressionType(expression.root);
     deriv->Differentiate(variable);
     std::cout << *expression.root;
+    int exit;
+    std::cout << "\nscrieti 0 pentru a termina programul\n";
+    while(true) {
+        std::cin >> exit;
+        if(exit == 0)
+            break;
+    }
     return 0;
 }
