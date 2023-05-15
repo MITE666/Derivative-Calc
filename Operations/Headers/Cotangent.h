@@ -9,7 +9,7 @@ extern std::shared_ptr<Expression> ExpressionType(std::shared_ptr<Node>& ptr);
 
 class Cotangent : public Expression {
 public:
-    Cotangent(std::shared_ptr<Node>& exp_);
+    explicit Cotangent(std::shared_ptr<Node>& exp_);
     void Differentiate(std::string &var) override;
 };
 

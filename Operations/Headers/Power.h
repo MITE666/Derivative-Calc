@@ -9,7 +9,7 @@ extern std::shared_ptr<Expression> ExpressionType(std::shared_ptr<Node>& ptr);
 
 class Power : public Expression {
 public:
-    Power(std::shared_ptr<Node>& exp_);
+    explicit Power(std::shared_ptr<Node>& exp_);
     void Differentiate(std::string &var) override;
 };
 

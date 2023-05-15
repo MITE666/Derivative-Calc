@@ -8,7 +8,7 @@ extern std::shared_ptr<Expression> ExpressionType(std::shared_ptr<Node>& ptr);
 
 class Logarithm : public Expression {
 public:
-    Logarithm(std::shared_ptr<Node>& exp_);
+    explicit Logarithm(std::shared_ptr<Node>& exp_);
     void Differentiate(std::string &var) override;
 };
 

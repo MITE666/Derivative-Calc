@@ -6,7 +6,7 @@
 
 class Variable : public Expression {
 public:
-    Variable(std::shared_ptr<Node>& exp_);
+    explicit Variable(std::shared_ptr<Node>& exp_);
     void Differentiate(std::string &var) override;
 };
 

@@ -7,7 +7,7 @@ extern std::shared_ptr<Expression> ExpressionType(std::shared_ptr<Node>& ptr);
 
 class Subtraction : public Expression {
 public:
-    Subtraction(std::shared_ptr<Node>& exp_);
+    explicit Subtraction(std::shared_ptr<Node>& exp_);
     void Differentiate(std::string &var) override;
 };
 

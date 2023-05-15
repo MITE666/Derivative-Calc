@@ -8,7 +8,7 @@ extern std::shared_ptr<Expression> ExpressionType(std::shared_ptr<Node>& ptr);
 
 class Multiplication : public Expression {
 public:
-    Multiplication(std::shared_ptr<Node>& exp_);
+    explicit Multiplication(std::shared_ptr<Node>& exp_);
     void Differentiate(std::string &var) override;
 };
 

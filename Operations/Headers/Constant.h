@@ -6,7 +6,7 @@
 
 class Constant : public Expression {
 public:
-    Constant(std::shared_ptr<Node>& exp_);
+    explicit Constant(std::shared_ptr<Node>& exp_);
     void Differentiate(std::string &var) override;
 };
 

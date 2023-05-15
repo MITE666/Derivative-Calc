@@ -9,7 +9,7 @@ protected:
     std::shared_ptr<Node> DeepCopy(std::shared_ptr<Node> node);
 public:
     std::shared_ptr<Node>& exp;
-    Expression(std::shared_ptr<Node>& exp_);
+    explicit Expression(std::shared_ptr<Node>& exp_);
     virtual void Differentiate(std::string &var) = 0;
     virtual ~Expression() = default;
 };

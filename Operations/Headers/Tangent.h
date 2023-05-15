@@ -9,7 +9,7 @@ extern std::shared_ptr<Expression> ExpressionType(std::shared_ptr<Node>& ptr);
 
 class Tangent : public Expression {
 public:
-    Tangent(std::shared_ptr<Node>& exp_);
+    explicit Tangent(std::shared_ptr<Node>& exp_);
     void Differentiate(std::string &var) override;
 };
 
