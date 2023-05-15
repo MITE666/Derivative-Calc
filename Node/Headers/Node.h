@@ -15,6 +15,7 @@ public:
     explicit Node(void* data_);
     friend std::ostream &operator<<(std::ostream &os, const Node& node_);
     [[nodiscard]] virtual std::shared_ptr<Node> clone() const = 0;
+    Node &operator=(const Node &other) = default;
     virtual ~Node() = default;
 };
 
