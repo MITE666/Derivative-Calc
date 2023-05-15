@@ -60,4 +60,4 @@
 ## This program differentiates a function from the input
 
 ### Note that the function must have space after each operation, parentheses or number.
-##### And you can write the variable that you want to differentiate by.
+#### And you can write the variable that you want to differentiate by.
