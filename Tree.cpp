@@ -29,7 +29,7 @@ Tree::Tree(std::string &expression_) : expression(expression_) {
                 newStack.pop();
             } else if(priority.count(std::dynamic_pointer_cast<Node<std::string>>(ptr)->data)){
                 if(!newStack.empty())
-                    while(!newStack.empty() && std::dynamic_pointer_cast<Node<std::string>>(newStack.top())->data != "(\0" && priority[std::dynamic_pointer_cast<Node<std::string>>(ptr)->data] <= priority[std::dynamic_pointer_cast<Node<std::string>>(ptr)->data]) {
+                    while(!newStack.empty() && std::dynamic_pointer_cast<Node<std::string>>(newStack.top())->data != "(\0" && priority[std::dynamic_pointer_cast<Node<std::string>>(ptr)->data] <= priority[std::dynamic_pointer_cast<Node<std::string>>(newStack.top())->data]) {
                         queue.push(newStack.top());
                         newStack.pop();
                         if(newStack.empty())
@@ -45,7 +45,7 @@ Tree::Tree(std::string &expression_) : expression(expression_) {
         queue.push(newStack.top());
         newStack.pop();
     }
-    Convert(queue);
+    Convert();
 }
 
 bool Tree::isInt(const std::string& elem) {
@@ -71,11 +71,11 @@ bool Tree::isFloat(const std::string& elem) {
     return true;
 }
 
-void Tree::Convert(std::queue<std::shared_ptr<BaseNode>> queue_) {
+void Tree::Convert() {
     std::stack<std::shared_ptr<BaseNode>> stack;
-    while(!queue_.empty()) {
-        std::shared_ptr<BaseNode> ptr = queue_.front();
-        queue_.pop();
+    while(!queue.empty()) {
+        std::shared_ptr<BaseNode> ptr = queue.front();
+        queue.pop();
         std::shared_ptr<BaseNode> int_ptr = std::dynamic_pointer_cast<Node<int>>(ptr);
         std::shared_ptr<BaseNode> float_ptr = std::dynamic_pointer_cast<Node<float>>(ptr);
         if(int_ptr || float_ptr) {

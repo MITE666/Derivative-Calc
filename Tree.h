@@ -34,7 +34,7 @@ private:
 public:
     std::shared_ptr<BaseNode> root;
     explicit Tree(std::string &expression_);
-    void Convert(std::queue<std::shared_ptr<BaseNode>> queue_);
+    void Convert();
     friend std::ostream &operator<<(std::ostream &os, const Tree &tree_);
     static void Simplify(std::shared_ptr<BaseNode>& node);
 };
