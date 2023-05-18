@@ -1,14 +1,14 @@
 #include "Headers/Node.h"
 
-Node::Node(void* data_) : data(data_), left(), right() {}
+Node::Node(void* data_) : data(data_), left(nullptr), right(nullptr) {}
 
 std::ostream &operator<<(std::ostream &os, const Node &node_) {
-    if(!node_.left.expired())
-        os << "( " << *node_.left.lock();
+    if(node_.left != nullptr)
+        os << "( " << *node_.left;
     node_.printNode(os);
-    if(node_.left.expired() && !node_.right.expired())
+    if(node_.left == nullptr && node_.right != nullptr)
         os << "( ";
-    if(!node_.right.expired())
-        os << *node_.right.lock() << ") ";
+    if(node_.right != nullptr)
+        os << *node_.right << ") ";
     return os;
 }

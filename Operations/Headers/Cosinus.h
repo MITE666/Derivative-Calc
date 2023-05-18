@@ -10,7 +10,7 @@ extern std::shared_ptr<Expression> ExpressionType(std::shared_ptr<Node>& ptr);
 class Cosinus : public Expression {
 public:
     explicit Cosinus(std::shared_ptr<Node>& exp_);
-    std::shared_ptr<Node> Differentiate(std::string &var) override;
+    void Differentiate(std::string &var) override;
 };
 
 

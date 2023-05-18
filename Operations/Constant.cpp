@@ -2,8 +2,8 @@
 
 Constant::Constant(std::shared_ptr<Node>& exp_) : Expression(exp_) {}
 
-std::shared_ptr<Node> Constant::Differentiate(std::string &var) {
+void Constant::Differentiate(std::string &var) {
     if(var == "how else should i use it?")
-        return nullptr;
-    return std::make_shared<IntNode>(0);
+        return;
+    exp = std::make_shared<IntNode>(0);
 }

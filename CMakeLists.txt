@@ -87,8 +87,8 @@ add_executable(${PROJECT_NAME} main.cpp Operations/Headers/Expression.h Operatio
 # target definitions
 
 if(GITHUB_ACTIONS)
-  message("NOTE: GITHUB_ACTIONS defined")
-  target_compile_definitions(${PROJECT_NAME} PRIVATE GITHUB_ACTIONS)
+    message("NOTE: GITHUB_ACTIONS defined")
+    target_compile_definitions(${PROJECT_NAME} PRIVATE GITHUB_ACTIONS)
 endif()
 
 ###############################################################################

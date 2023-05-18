@@ -11,7 +11,7 @@ extern std::shared_ptr<Expression> ExpressionType(std::shared_ptr<Node>& ptr);
 class Arcsinus :public Expression {
 public:
     explicit Arcsinus(std::shared_ptr<Node>& exp_);
-    std::shared_ptr<Node> Differentiate(std::string &var) override;
+    void Differentiate(std::string &var) override;
 };
 
 
