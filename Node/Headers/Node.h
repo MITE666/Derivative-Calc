@@ -10,7 +10,7 @@ private:
     void PrintNode(std::ostream& os) const override;
 public:
     T data;
-    explicit Node(const T& data_);
+    explicit Node(T data_);
     [[nodiscard]] std::shared_ptr<BaseNode> clone() const override;
 };
 
