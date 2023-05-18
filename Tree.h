@@ -1,9 +1,7 @@
 #ifndef OOP_TREE_H
 #define OOP_TREE_H
 
-#include "Node/Headers/IntNode.h"
-#include "Node/Headers/FloatNode.h"
-#include "Node/Headers/StringNode.h"
+#include "Node/Headers/Node.h"
 #include <queue>
 #include <stack>
 #include <sstream>
@@ -13,7 +11,7 @@
 class Tree {
 private:
     std::string expression;
-    std::queue<std::shared_ptr<Node>> queue;
+    std::queue<std::shared_ptr<BaseNode>> queue;
     std::map<std::string, int> priority = {
             std::make_pair("+\0", 0), std::make_pair("-\0", 0),
             std::make_pair("*\0", 1), std::make_pair("/\0", 1),
@@ -33,9 +31,9 @@ private:
     [[nodiscard]] static bool isFloat(const std::string& elem);
 
 public:
-    std::shared_ptr<Node> root;
+    std::shared_ptr<BaseNode> root;
     explicit Tree(std::string &expression_);
-    void Convert(std::queue<std::shared_ptr<Node>> queue_);
+    void Convert(std::queue<std::shared_ptr<BaseNode>> queue_);
     friend std::ostream &operator<<(std::ostream &os, const Tree &tree_);
 };
 

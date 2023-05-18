@@ -1,3 +1,3 @@
 #include "Headers/Expression.h"
 
-Expression::Expression(std::shared_ptr<Node>& exp_) : exp(exp_) {}
+Expression::Expression(std::shared_ptr<BaseNode>& exp_) : exp(exp_) {}

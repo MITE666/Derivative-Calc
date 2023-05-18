@@ -1,7 +1,7 @@
 #include "Tree.h"
 
-Tree::Tree(std::string &expression_) : expression(std::move(expression_)) {
-    std::stack<std::shared_ptr<Node>> newStack;
+Tree::Tree(std::string &expression_) : expression(expression_) {
+    std::stack<std::shared_ptr<BaseNode>> newStack;
     std::istringstream iss(expression);
     std::vector<std::string> elements;
     std::string element;
@@ -11,28 +11,25 @@ Tree::Tree(std::string &expression_) : expression(std::move(expression_)) {
     for(const auto& elem : elements) {
         if(isInt(elem)) {
             int i = std::stoi(elem);
-            std::shared_ptr<Node> ptr;
-            ptr = std::make_shared<IntNode>(i);
+            std::shared_ptr<BaseNode> ptr = std::make_shared<Node<int>>(i);
             queue.push(ptr);
         } else if(isFloat(elem)) {
             float f = std::stof(elem);
-            std::shared_ptr<Node> ptr;
-            ptr = std::make_shared<FloatNode>(f);
+            std::shared_ptr<BaseNode> ptr = std::make_shared<Node<float>>(f);
             queue.push(ptr);
         } else {
-            std::shared_ptr<Node> ptr;
-            ptr = std::make_shared<StringNode>(elem);
-            if(*(std::string*)ptr->data == "(\0") {
+            std::shared_ptr<BaseNode> ptr = std::make_shared<Node<std::string>>(elem);
+            if(std::dynamic_pointer_cast<Node<std::string>>(ptr)->data == "(\0") {
                 newStack.push(ptr);
-            } else if(*(std::string*)ptr->data == ")\0") {
-                while(*(std::string*)newStack.top()->data != "(\0") {
+            } else if(std::dynamic_pointer_cast<Node<std::string>>(ptr)->data == ")\0") {
+                while(std::dynamic_pointer_cast<Node<std::string>>(newStack.top())->data != "(\0") {
                     queue.push(newStack.top());
                     newStack.pop();
                 }
                 newStack.pop();
-            } else if(priority.count(*(std::string*)ptr->data)){
+            } else if(priority.count(std::dynamic_pointer_cast<Node<std::string>>(ptr)->data)){
                 if(!newStack.empty())
-                    while(!newStack.empty() && *(std::string*)newStack.top()->data != "(\0" && priority[*(std::string*)ptr->data] <= priority[*(std::string*)newStack.top()->data]) {
+                    while(!newStack.empty() && std::dynamic_pointer_cast<Node<std::string>>(newStack.top())->data != "(\0" && priority[std::dynamic_pointer_cast<Node<std::string>>(ptr)->data] <= priority[std::dynamic_pointer_cast<Node<std::string>>(ptr)->data]) {
                         queue.push(newStack.top());
                         newStack.pop();
                         if(newStack.empty())
@@ -52,10 +49,11 @@ Tree::Tree(std::string &expression_) : expression(std::move(expression_)) {
 }
 
 bool Tree::isInt(const std::string& elem) {
-    for(char c : elem) {
-        if(!isdigit(c))
+    for (char c: elem) {
+        if (!isdigit(c))
             return false;
     }
+
     return true;
 }
 
@@ -73,26 +71,26 @@ bool Tree::isFloat(const std::string& elem) {
     return true;
 }
 
-void Tree::Convert(std::queue<std::shared_ptr<Node>> queue_) {
-    std::stack<std::shared_ptr<Node>> stack;
+void Tree::Convert(std::queue<std::shared_ptr<BaseNode>> queue_) {
+    std::stack<std::shared_ptr<BaseNode>> stack;
     while(!queue_.empty()) {
-        std::shared_ptr<Node> ptr = queue_.front();
+        std::shared_ptr<BaseNode> ptr = queue_.front();
         queue_.pop();
-        std::shared_ptr<Node> int_ptr = std::dynamic_pointer_cast<IntNode>(ptr);
-        std::shared_ptr<Node> float_ptr = std::dynamic_pointer_cast<FloatNode>(ptr);
+        std::shared_ptr<BaseNode> int_ptr = std::dynamic_pointer_cast<Node<int>>(ptr);
+        std::shared_ptr<BaseNode> float_ptr = std::dynamic_pointer_cast<Node<float>>(ptr);
         if(int_ptr || float_ptr) {
             stack.push(ptr);
         } else {
-            if(std::count(binaryOp.begin(), binaryOp.end(), *(std::string*)ptr->data)) {
-                std::shared_ptr<Node> right_ptr = stack.top();
+            if(std::count(binaryOp.begin(), binaryOp.end(), std::dynamic_pointer_cast<Node<std::string>>(ptr)->data)) {
+                std::shared_ptr<BaseNode> right_ptr = stack.top();
                 stack.pop();
-                std::shared_ptr<Node> left_ptr = stack.top();
+                std::shared_ptr<BaseNode> left_ptr = stack.top();
                 stack.pop();
                 ptr->right = right_ptr;
                 ptr->left = left_ptr;
                 stack.push(ptr);
-            } else if(std::count(unaryOp.begin(), unaryOp.end(), *(std::string*)ptr->data)) {
-                std::shared_ptr<Node> new_ptr = stack.top();
+            } else if(std::count(unaryOp.begin(), unaryOp.end(), std::dynamic_pointer_cast<Node<std::string>>(ptr)->data)) {
+                std::shared_ptr<BaseNode> new_ptr = stack.top();
                 stack.pop();
                 ptr->right = new_ptr;
                 stack.push(ptr);

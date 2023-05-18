@@ -1,22 +1,17 @@
 #ifndef OOP_NODE_H
 #define OOP_NODE_H
 
-#include <iostream>
-#include <memory>
+#include "BaseNode.h"
+#include <utility>
 
-class Node {
+template <typename T>
+class Node : public BaseNode {
 private:
-    virtual void printNode(std::ostream &os) const = 0;
-
+    void PrintNode(std::ostream& os) const override;
 public:
-    void* data;
-    std::shared_ptr<Node> left;
-    std::shared_ptr<Node> right;
-    explicit Node(void* data_);
-    friend std::ostream &operator<<(std::ostream &os, const Node& node_);
-    [[nodiscard]] virtual std::shared_ptr<Node> clone() const = 0;
-    Node &operator=(const Node &other) = default;
-    virtual ~Node() = default;
+    T data;
+    explicit Node(T data_);
+    [[nodiscard]] std::shared_ptr<BaseNode> clone() const override;
 };
 
 

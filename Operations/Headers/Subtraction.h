@@ -3,11 +3,11 @@
 
 #include "Expression.h"
 
-extern std::shared_ptr<Expression> ExpressionType(std::shared_ptr<Node>& ptr);
+extern std::shared_ptr<Expression> ExpressionType(std::shared_ptr<BaseNode>& ptr);
 
 class Subtraction : public Expression {
 public:
-    explicit Subtraction(std::shared_ptr<Node>& exp_);
+    explicit Subtraction(std::shared_ptr<BaseNode>& exp_);
     void Differentiate(std::string &var) override;
 };
 

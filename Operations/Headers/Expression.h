@@ -6,8 +6,8 @@
 
 class Expression {
 public:
-    std::shared_ptr<Node>& exp;
-    explicit Expression(std::shared_ptr<Node>& exp_);
+    std::shared_ptr<BaseNode>& exp;
+    explicit Expression(std::shared_ptr<BaseNode>& exp_);
     virtual void Differentiate(std::string &var) = 0;
     virtual ~Expression() = default;
 };

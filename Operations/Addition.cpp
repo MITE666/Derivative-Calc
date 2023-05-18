@@ -1,6 +1,6 @@
 #include "Headers/Addition.h"
 
-Addition::Addition(std::shared_ptr<Node>& exp_) : Expression(exp_) {}
+Addition::Addition(std::shared_ptr<BaseNode>& exp_) : Expression(exp_) {}
 
 void Addition::Differentiate(std::string &var) {
     auto left_exp = ExpressionType(exp->left);

@@ -1,6 +1,6 @@
 #include "Headers/Subtraction.h"
 
-Subtraction::Subtraction(std::shared_ptr<Node>& exp_) : Expression(exp_) {}
+Subtraction::Subtraction(std::shared_ptr<BaseNode>& exp_) : Expression(exp_) {}
 
 void Subtraction::Differentiate(std::string &var) {
     auto left_exp = ExpressionType(exp->left);

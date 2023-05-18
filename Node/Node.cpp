@@ -1,14 +1,23 @@
 #include "Headers/Node.h"
 
-Node::Node(void* data_) : data(data_), left(nullptr), right(nullptr) {}
+template <typename T>
+Node<T>::Node(T data_) : data(data_) {}
 
-std::ostream &operator<<(std::ostream &os, const Node &node_) {
-    if(node_.left != nullptr)
-        os << "( " << *node_.left;
-    node_.printNode(os);
-    if(node_.left == nullptr && node_.right != nullptr)
-        os << "( ";
-    if(node_.right != nullptr)
-        os << *node_.right << ") ";
-    return os;
+template <>
+Node<int>::Node(int data_) : data(data_) {}
+
+template <>
+Node<float>::Node(float data_) : data(data_) {}
+
+template <>
+Node<std::string>::Node(std::string data_) : data(std::move(data_)) {}
+
+template<typename T>
+std::shared_ptr<BaseNode> Node<T>::clone() const {
+    return std::make_shared<Node<T>>(*this);
+}
+
+template<typename T>
+void Node<T>::PrintNode(std::ostream &os) const {
+    os << data << " ";
 }
