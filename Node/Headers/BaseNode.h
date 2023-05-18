@@ -10,6 +10,7 @@ private:
 public:
     std::shared_ptr<BaseNode> left;
     std::shared_ptr<BaseNode> right;
+    static int nr_parentheses;
     BaseNode();
     friend std::ostream &operator<<(std::ostream &os, const BaseNode& baseNode_);
     [[nodiscard]] virtual std::shared_ptr<BaseNode> clone() const = 0;

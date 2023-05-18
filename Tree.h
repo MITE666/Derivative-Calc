@@ -6,6 +6,7 @@
 #include <stack>
 #include <sstream>
 #include <memory>
+#include <cmath>
 #include <map>
 
 class Tree {
@@ -35,6 +36,7 @@ public:
     explicit Tree(std::string &expression_);
     void Convert(std::queue<std::shared_ptr<BaseNode>> queue_);
     friend std::ostream &operator<<(std::ostream &os, const Tree &tree_);
+    static void Simplify(std::shared_ptr<BaseNode>& node);
 };
 
 
