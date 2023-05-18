@@ -62,8 +62,8 @@ int main() {
     Tree expression = Tree(expr);
     //std::cout << expression << "\n";
     std::shared_ptr<Expression> deriv = ExpressionType(expression.root);
-    deriv->Differentiate(variable);
-    std::cout << *expression.root;
+    auto final_root = deriv->Differentiate(variable);
+    std::cout << *final_root;
     int exit;
     std::cout << "\nscrieti 0 pentru a termina programul\n";
     while(true) {

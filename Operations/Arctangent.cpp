@@ -2,16 +2,16 @@
 
 Arctangent::Arctangent(std::shared_ptr<Node>& exp_) : Expression(exp_) {}
 
-void Arctangent::Differentiate(std::string &var) {
-    auto arg = DeepCopy(exp->right);
+std::shared_ptr<Node> Arctangent::Differentiate(std::string &var) {
+    auto arg = DeepCopy(exp->right.lock());
     auto arg_exp = ExpressionType(arg);
-    arg_exp->Differentiate(var);
+    arg = arg_exp->Differentiate(var);
     std::shared_ptr<Node> new_exp = std::make_shared<StringNode>("/");
-    new_exp->left = arg;
-    new_exp->right = std::make_shared<StringNode>("+");
-    new_exp->right->left = std::make_shared<StringNode>("^");
-    new_exp->right->right = std::make_shared<IntNode>(1);
-    new_exp->right->left->left = exp->right;
-    new_exp->right->left->right = std::make_shared<IntNode>(2);
-    exp = new_exp;
+    new_exp->left = std::weak_ptr<Node>(arg);
+    new_exp->right = std::weak_ptr<Node>(std::make_shared<StringNode>("+"));
+    new_exp->right.lock()->left = std::weak_ptr<Node>(std::make_shared<StringNode>("^"));
+    new_exp->right.lock()->right = std::weak_ptr<Node>(std::make_shared<IntNode>(1));
+    new_exp->right.lock()->left.lock()->left = exp->right;
+    new_exp->right.lock()->left.lock()->right = std::weak_ptr<Node>(std::make_shared<IntNode>(2));
+    return exp;
 }

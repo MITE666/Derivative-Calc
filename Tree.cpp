@@ -88,13 +88,13 @@ void Tree::Convert(std::queue<std::shared_ptr<Node>> queue_) {
                 stack.pop();
                 std::shared_ptr<Node> left_ptr = stack.top();
                 stack.pop();
-                ptr->right = right_ptr;
-                ptr->left = left_ptr;
+                ptr->right = std::weak_ptr<Node>(right_ptr);
+                ptr->left = std::weak_ptr<Node>(left_ptr);
                 stack.push(ptr);
             } else if(std::count(unaryOp.begin(), unaryOp.end(), *(std::string*)ptr->data)) {
                 std::shared_ptr<Node> new_ptr = stack.top();
                 stack.pop();
-                ptr->right = new_ptr;
+                ptr->right = std::weak_ptr<Node>(new_ptr);
                 stack.push(ptr);
             } else {
                 stack.push(ptr);
