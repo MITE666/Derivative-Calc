@@ -5,8 +5,6 @@
 #include <memory>
 
 class Expression {
-protected:
-    std::shared_ptr<Node> DeepCopy(std::shared_ptr<Node> node);
 public:
     std::shared_ptr<Node>& exp;
     explicit Expression(std::shared_ptr<Node>& exp_);

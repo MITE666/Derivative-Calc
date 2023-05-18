@@ -3,8 +3,8 @@
 Division::Division(std::shared_ptr<Node>& exp_) : Expression(exp_) {}
 
 void Division::Differentiate(std::string &var) {
-    auto left = DeepCopy(exp->left);
-    auto right = DeepCopy(exp->right);
+    auto left = exp->left->clone();
+    auto right = exp->right->clone();
     auto left_exp = ExpressionType(exp->left);
     auto right_exp = ExpressionType(exp->right);
     left_exp->Differentiate(var);

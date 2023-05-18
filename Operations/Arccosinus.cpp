@@ -3,7 +3,7 @@
 Arccosinus::Arccosinus(std::shared_ptr<Node>& exp_) : Expression(exp_) {}
 
 void Arccosinus::Differentiate(std::string &var) {
-    auto arg = DeepCopy(exp->right);
+    auto arg = exp->right->clone();
     auto arg_exp = ExpressionType(exp->right);
     arg_exp->Differentiate(var);
     std::shared_ptr<Node> new_exp = std::make_shared<StringNode>("-");
