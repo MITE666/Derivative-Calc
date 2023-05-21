@@ -45,7 +45,11 @@ Tree::Tree(std::string &expression_) : expression(expression_) {
         queue.push(newStack.top());
         newStack.pop();
     }
-    Convert();
+    try {
+        Convert();
+    } catch(EmptyStackException& e) {
+        std::cout << e.what();
+    }
 }
 
 bool Tree::isInt(const std::string& elem) {
@@ -82,14 +86,20 @@ void Tree::Convert() {
             stack.push(ptr);
         } else {
             if(std::count(binaryOp.begin(), binaryOp.end(), std::dynamic_pointer_cast<Node<std::string>>(ptr)->data)) {
+                if(stack.empty())
+                    throw EmptyStackException();
                 std::shared_ptr<BaseNode> right_ptr = stack.top();
                 stack.pop();
+                if(stack.empty())
+                    throw EmptyStackException();
                 std::shared_ptr<BaseNode> left_ptr = stack.top();
                 stack.pop();
                 ptr->right = right_ptr;
                 ptr->left = left_ptr;
                 stack.push(ptr);
             } else if(std::count(unaryOp.begin(), unaryOp.end(), std::dynamic_pointer_cast<Node<std::string>>(ptr)->data)) {
+                if(stack.empty())
+                    throw EmptyStackException();
                 std::shared_ptr<BaseNode> new_ptr = stack.top();
                 stack.pop();
                 ptr->right = new_ptr;

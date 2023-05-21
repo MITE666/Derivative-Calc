@@ -2,6 +2,7 @@
 #define OOP_TREE_H
 
 #include "Node/Headers/Node.h"
+#include "EmptyStackException.h"
 #include <queue>
 #include <stack>
 #include <sstream>
