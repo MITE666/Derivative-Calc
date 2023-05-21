@@ -5,8 +5,9 @@
 #include <memory>
 
 class Expression {
-public:
+protected:
     std::shared_ptr<BaseNode>& exp;
+public:
     explicit Expression(std::shared_ptr<BaseNode>& exp_);
     virtual void Differentiate(std::string &var) = 0;
     virtual ~Expression() = default;
