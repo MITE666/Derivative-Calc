@@ -1,3 +1,5 @@
+#include <utility>
+
 #include "Headers/BaseNode.h"
 
 int BaseNode::nr_parentheses = 0;
@@ -24,3 +26,19 @@ std::ostream &operator<<(std::ostream &os, const BaseNode &baseNode_) {
 }
 
 BaseNode::BaseNode() : left(nullptr), right(nullptr) {}
+
+std::shared_ptr<BaseNode>& BaseNode::get_left() {
+    return left;
+}
+
+std::shared_ptr<BaseNode>& BaseNode::get_right() {
+    return right;
+}
+
+void BaseNode::set_left(std::shared_ptr<BaseNode> left_) {
+    left = std::move(left_);
+}
+
+void BaseNode::set_right(std::shared_ptr<BaseNode> right_) {
+    right = std::move(right_);
+}

@@ -8,10 +8,11 @@ template <typename T>
 class Node : public BaseNode {
 private:
     void PrintNode(std::ostream& os) const override;
-public:
     T data;
+public:
     explicit Node(T data_);
     [[nodiscard]] std::shared_ptr<BaseNode> clone() const override;
+    T get_data();
 };
 
 

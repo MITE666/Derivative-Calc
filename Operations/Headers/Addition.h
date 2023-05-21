@@ -3,8 +3,6 @@
 
 #include "Expression.h"
 
-extern std::shared_ptr<Expression> ExpressionType(std::shared_ptr<BaseNode>& ptr);
-
 class Addition : public Expression {
 public:
     explicit Addition(std::shared_ptr<BaseNode>& exp_);

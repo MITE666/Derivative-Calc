@@ -4,8 +4,6 @@
 #include "Expression.h"
 #include "../../Node/Headers/Node.h"
 
-extern std::shared_ptr<Expression> ExpressionType(std::shared_ptr<BaseNode>& ptr);
-
 class Arcsinus :public Expression {
 public:
     explicit Arcsinus(std::shared_ptr<BaseNode>& exp_);

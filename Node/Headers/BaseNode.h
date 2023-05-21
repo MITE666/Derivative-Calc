@@ -7,14 +7,18 @@
 class BaseNode {
 private:
     virtual void PrintNode(std::ostream &os) const = 0;
-public:
     std::shared_ptr<BaseNode> left;
     std::shared_ptr<BaseNode> right;
+public:
     static int nr_parentheses;
     BaseNode();
     friend std::ostream &operator<<(std::ostream &os, const BaseNode& baseNode_);
     [[nodiscard]] virtual std::shared_ptr<BaseNode> clone() const = 0;
     virtual ~BaseNode() = default;
+    std::shared_ptr<BaseNode>& get_left();
+    std::shared_ptr<BaseNode>& get_right();
+    void set_left(std::shared_ptr<BaseNode> left_);
+    void set_right(std::shared_ptr<BaseNode> right_);
 };
 
 

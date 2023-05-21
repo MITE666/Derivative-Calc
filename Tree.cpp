@@ -19,17 +19,17 @@ Tree::Tree(std::string &expression_) : expression(expression_) {
             queue.push(ptr);
         } else {
             std::shared_ptr<BaseNode> ptr = std::make_shared<Node<std::string>>(elem);
-            if(std::dynamic_pointer_cast<Node<std::string>>(ptr)->data == "(\0") {
+            if(std::dynamic_pointer_cast<Node<std::string>>(ptr)->get_data() == "(") {
                 newStack.push(ptr);
-            } else if(std::dynamic_pointer_cast<Node<std::string>>(ptr)->data == ")\0") {
-                while(std::dynamic_pointer_cast<Node<std::string>>(newStack.top())->data != "(\0") {
+            } else if(std::dynamic_pointer_cast<Node<std::string>>(ptr)->get_data() == ")") {
+                while(std::dynamic_pointer_cast<Node<std::string>>(newStack.top())->get_data() != "(") {
                     queue.push(newStack.top());
                     newStack.pop();
                 }
                 newStack.pop();
-            } else if(priority.count(std::dynamic_pointer_cast<Node<std::string>>(ptr)->data)){
+            } else if(priority.count(std::dynamic_pointer_cast<Node<std::string>>(ptr)->get_data())){
                 if(!newStack.empty())
-                    while(!newStack.empty() && std::dynamic_pointer_cast<Node<std::string>>(newStack.top())->data != "(\0" && priority[std::dynamic_pointer_cast<Node<std::string>>(ptr)->data] <= priority[std::dynamic_pointer_cast<Node<std::string>>(newStack.top())->data]) {
+                    while(!newStack.empty() && std::dynamic_pointer_cast<Node<std::string>>(newStack.top())->get_data() != "(" && priority[std::dynamic_pointer_cast<Node<std::string>>(ptr)->get_data()] <= priority[std::dynamic_pointer_cast<Node<std::string>>(newStack.top())->get_data()]) {
                         queue.push(newStack.top());
                         newStack.pop();
                         if(newStack.empty())
@@ -85,7 +85,7 @@ void Tree::Convert() {
         if(int_ptr || float_ptr) {
             stack.push(ptr);
         } else {
-            if(std::count(binaryOp.begin(), binaryOp.end(), std::dynamic_pointer_cast<Node<std::string>>(ptr)->data)) {
+            if(std::count(binaryOp.begin(), binaryOp.end(), std::dynamic_pointer_cast<Node<std::string>>(ptr)->get_data())) {
                 if(stack.empty())
                     throw EmptyStackException();
                 std::shared_ptr<BaseNode> right_ptr = stack.top();
@@ -94,15 +94,15 @@ void Tree::Convert() {
                     throw EmptyStackException();
                 std::shared_ptr<BaseNode> left_ptr = stack.top();
                 stack.pop();
-                ptr->right = right_ptr;
-                ptr->left = left_ptr;
+                ptr->set_right(right_ptr);
+                ptr->set_left(left_ptr);
                 stack.push(ptr);
-            } else if(std::count(unaryOp.begin(), unaryOp.end(), std::dynamic_pointer_cast<Node<std::string>>(ptr)->data)) {
+            } else if(std::count(unaryOp.begin(), unaryOp.end(), std::dynamic_pointer_cast<Node<std::string>>(ptr)->get_data())) {
                 if(stack.empty())
                     throw EmptyStackException();
                 std::shared_ptr<BaseNode> new_ptr = stack.top();
                 stack.pop();
-                ptr->right = new_ptr;
+                ptr->set_right(new_ptr);
                 stack.push(ptr);
             } else {
                 stack.push(ptr);
@@ -119,210 +119,210 @@ std::ostream &operator<<(std::ostream &os, const Tree &tree_) {
 }
 
 void Tree::Simplify(std::shared_ptr<BaseNode>& node) {
-    if(node->left != nullptr)
-        Tree::Simplify(node->left);
-    if(node->right != nullptr)
-        Tree::Simplify(node->right);
+    if(node->get_left() != nullptr)
+        Tree::Simplify(node->get_left());
+    if(node->get_right() != nullptr)
+        Tree::Simplify(node->get_right());
     auto string_ptr = std::dynamic_pointer_cast<Node<std::string>>(node);
     if(string_ptr) {
-        if(string_ptr->data == "+\0") {
-            auto int_ptr_left = std::dynamic_pointer_cast<Node<int>>(node->left);
-            auto int_ptr_right = std::dynamic_pointer_cast<Node<int>>(node->right);
-            auto float_ptr_left = std::dynamic_pointer_cast<Node<float>>(node->left);
-            auto float_ptr_right = std::dynamic_pointer_cast<Node<float>>(node->right);
+        if(string_ptr->get_data() == "+") {
+            auto int_ptr_left = std::dynamic_pointer_cast<Node<int>>(node->get_left());
+            auto int_ptr_right = std::dynamic_pointer_cast<Node<int>>(node->get_right());
+            auto float_ptr_left = std::dynamic_pointer_cast<Node<float>>(node->get_left());
+            auto float_ptr_right = std::dynamic_pointer_cast<Node<float>>(node->get_right());
             if(int_ptr_right && int_ptr_left) {
-                node = std::make_shared<Node<int>>(int_ptr_left->data + int_ptr_right->data);
+                node = std::make_shared<Node<int>>(int_ptr_left->get_data() + int_ptr_right->get_data());
                 return;
             }
             if(float_ptr_right && float_ptr_left) {
-                node = std::make_shared<Node<float>>(float_ptr_left->data + float_ptr_right->data);
+                node = std::make_shared<Node<float>>(float_ptr_left->get_data() + float_ptr_right->get_data());
                 return;
             }
             if(int_ptr_left) {
-                if(int_ptr_left->data == 0) {
-                    node = node->right;
+                if(int_ptr_left->get_data() == 0) {
+                    node = node->get_right();
                     return;
                 }
             }
             if(int_ptr_right) {
-                if(int_ptr_right->data == 0) {
-                    node = node->left;
+                if(int_ptr_right->get_data() == 0) {
+                    node = node->get_left();
                     return;
                 }
             }
-        } else if(string_ptr->data == "-\0") {
-            auto int_ptr_left = std::dynamic_pointer_cast<Node<int>>(node->left);
-            auto int_ptr_right = std::dynamic_pointer_cast<Node<int>>(node->right);
-            auto float_ptr_left = std::dynamic_pointer_cast<Node<float>>(node->left);
-            auto float_ptr_right = std::dynamic_pointer_cast<Node<float>>(node->right);
-            auto string_ptr_left = std::dynamic_pointer_cast<Node<std::string>>(node->left);
-            auto string_ptr_right = std::dynamic_pointer_cast<Node<std::string>>(node->right);
+        } else if(string_ptr->get_data() == "-") {
+            auto int_ptr_left = std::dynamic_pointer_cast<Node<int>>(node->get_left());
+            auto int_ptr_right = std::dynamic_pointer_cast<Node<int>>(node->get_right());
+            auto float_ptr_left = std::dynamic_pointer_cast<Node<float>>(node->get_left());
+            auto float_ptr_right = std::dynamic_pointer_cast<Node<float>>(node->get_right());
+            auto string_ptr_left = std::dynamic_pointer_cast<Node<std::string>>(node->get_left());
+            auto string_ptr_right = std::dynamic_pointer_cast<Node<std::string>>(node->get_right());
             if(int_ptr_right && int_ptr_left) {
-                node = std::make_shared<Node<int>>(int_ptr_left->data - int_ptr_right->data);
+                node = std::make_shared<Node<int>>(int_ptr_left->get_data() - int_ptr_right->get_data());
                 return;
             }
             if(float_ptr_right && float_ptr_left) {
-                node = std::make_shared<Node<float>>(float_ptr_left->data - float_ptr_right->data);
+                node = std::make_shared<Node<float>>(float_ptr_left->get_data() - float_ptr_right->get_data());
                 return;
             }
             if(int_ptr_right) {
                 if(int_ptr_left) {
-                    if(int_ptr_right->data == int_ptr_left->data)
+                    if(int_ptr_right->get_data() == int_ptr_left->get_data())
                         node = std::make_shared<Node<int>>(0);
-                    else if(int_ptr_right->data == 0)
-                        node = node->left;
-                } else if(int_ptr_right->data == 0)
-                    node = node->left;
+                    else if(int_ptr_right->get_data() == 0)
+                        node = node->get_left();
+                } else if(int_ptr_right->get_data() == 0)
+                    node = node->get_left();
             } else if(string_ptr_left && string_ptr_right){
-                if(string_ptr_right->data == string_ptr_left->data)
+                if(string_ptr_right->get_data() == string_ptr_left->get_data())
                     node = std::make_shared<Node<int>>(0);
             }
-        } else if(string_ptr->data == "*\0") {
-            auto int_ptr_left = std::dynamic_pointer_cast<Node<int>>(node->left);
-            auto int_ptr_right = std::dynamic_pointer_cast<Node<int>>(node->right);
-            auto float_ptr_left = std::dynamic_pointer_cast<Node<float>>(node->left);
-            auto float_ptr_right = std::dynamic_pointer_cast<Node<float>>(node->right);
+        } else if(string_ptr->get_data() == "*") {
+            auto int_ptr_left = std::dynamic_pointer_cast<Node<int>>(node->get_left());
+            auto int_ptr_right = std::dynamic_pointer_cast<Node<int>>(node->get_right());
+            auto float_ptr_left = std::dynamic_pointer_cast<Node<float>>(node->get_left());
+            auto float_ptr_right = std::dynamic_pointer_cast<Node<float>>(node->get_right());
             if(int_ptr_left && int_ptr_right) {
-                node = std::make_shared<Node<int>>(int_ptr_right->data * int_ptr_left->data);
+                node = std::make_shared<Node<int>>(int_ptr_right->get_data() * int_ptr_left->get_data());
                 return;
             }
             if(float_ptr_right && float_ptr_left) {
-                node = std::make_shared<Node<float>>(float_ptr_left->data * float_ptr_right->data);
+                node = std::make_shared<Node<float>>(float_ptr_left->get_data() * float_ptr_right->get_data());
                 return;
             }
             if(int_ptr_right) {
-                if(int_ptr_right->data == 0) {
+                if(int_ptr_right->get_data() == 0) {
                     node = std::make_shared<Node<int>>(0);
                     return;
                 }
-                else if(int_ptr_right->data == 1) {
-                    node = node->left;
+                else if(int_ptr_right->get_data() == 1) {
+                    node = node->get_left();
                     return;
                 }
             }
             if(int_ptr_left) {
-                if(int_ptr_left->data == 0) {
+                if(int_ptr_left->get_data() == 0) {
                     node = std::make_shared<Node<int>>(0);
                     return;
                 }
-                else if(int_ptr_left->data == 1) {
-                    node = node->right;
+                else if(int_ptr_left->get_data() == 1) {
+                    node = node->get_right();
                     return;
                 }
             }
-        } else if(string_ptr->data == "/\0") {
-            auto int_ptr_left = std::dynamic_pointer_cast<Node<int>>(node->left);
-            auto int_ptr_right = std::dynamic_pointer_cast<Node<int>>(node->right);
-            auto float_ptr_left = std::dynamic_pointer_cast<Node<float>>(node->left);
-            auto float_ptr_right = std::dynamic_pointer_cast<Node<float>>(node->right);
+        } else if(string_ptr->get_data() == "/") {
+            auto int_ptr_left = std::dynamic_pointer_cast<Node<int>>(node->get_left());
+            auto int_ptr_right = std::dynamic_pointer_cast<Node<int>>(node->get_right());
+            auto float_ptr_left = std::dynamic_pointer_cast<Node<float>>(node->get_left());
+            auto float_ptr_right = std::dynamic_pointer_cast<Node<float>>(node->get_right());
             if(int_ptr_right && int_ptr_left) {
-                node = std::make_shared<Node<float>>((float)(int_ptr_left->data / int_ptr_right->data));
+                node = std::make_shared<Node<float>>((float)(int_ptr_left->get_data() / int_ptr_right->get_data()));
                 return;
             }
             if(float_ptr_right && float_ptr_left) {
-                node = std::make_shared<Node<float>>((float)(float_ptr_left->data * float_ptr_right->data));
+                node = std::make_shared<Node<float>>((float)(float_ptr_left->get_data() * float_ptr_right->get_data()));
                 return;
             }
             if(int_ptr_right) {
-                if(int_ptr_right->data == 1) {
-                    node = node->left;
+                if(int_ptr_right->get_data() == 1) {
+                    node = node->get_left();
                     return;
                 }
             }
             if(int_ptr_left) {
-                if(int_ptr_left->data == 0) {
+                if(int_ptr_left->get_data() == 0) {
                     node = std::make_shared<Node<int>>(0);
                     return;
                 }
             }
-        } else if(string_ptr->data == "ln\0") {
-            auto int_ptr = std::dynamic_pointer_cast<Node<int>>(node->right);
-            auto string_ptr_arg = std::dynamic_pointer_cast<Node<std::string>>(node->right);
+        } else if(string_ptr->get_data() == "ln") {
+            auto int_ptr = std::dynamic_pointer_cast<Node<int>>(node->get_right());
+            auto string_ptr_arg = std::dynamic_pointer_cast<Node<std::string>>(node->get_right());
             if(int_ptr) {
-                if(int_ptr->data == 1)
+                if(int_ptr->get_data() == 1)
                     node = std::make_shared<Node<int>>(0);
             } else if(string_ptr_arg) {
-                if(string_ptr_arg->data == "e\0")
+                if(string_ptr_arg->get_data() == "e")
                     node = std::make_shared<Node<int>>(1);
             }
-        } else if(string_ptr->data == "^\0") {
-            auto int_ptr_left = std::dynamic_pointer_cast<Node<int>>(node->left);
-            auto int_ptr_right = std::dynamic_pointer_cast<Node<int>>(node->right);
-            auto float_ptr_left = std::dynamic_pointer_cast<Node<float>>(node->left);
-            auto float_ptr_right = std::dynamic_pointer_cast<Node<float>>(node->right);
-            auto string_ptr_left = std::dynamic_pointer_cast<Node<std::string>>(node->left);
-            auto string_ptr_right = std::dynamic_pointer_cast<Node<std::string>>(node->right);
+        } else if(string_ptr->get_data() == "^") {
+            auto int_ptr_left = std::dynamic_pointer_cast<Node<int>>(node->get_left());
+            auto int_ptr_right = std::dynamic_pointer_cast<Node<int>>(node->get_right());
+            auto float_ptr_left = std::dynamic_pointer_cast<Node<float>>(node->get_left());
+            auto float_ptr_right = std::dynamic_pointer_cast<Node<float>>(node->get_right());
+            auto string_ptr_left = std::dynamic_pointer_cast<Node<std::string>>(node->get_left());
+            auto string_ptr_right = std::dynamic_pointer_cast<Node<std::string>>(node->get_right());
             if(int_ptr_right && int_ptr_left) {
-                node = std::make_shared<Node<int>>((int)pow(int_ptr_left->data, int_ptr_right->data));
+                node = std::make_shared<Node<int>>((int)pow(int_ptr_left->get_data(), int_ptr_right->get_data()));
                 return;
             }
             if(float_ptr_right && float_ptr_left) {
-                node = std::make_shared<Node<float>>((float)pow(float_ptr_left->data, float_ptr_right->data));
+                node = std::make_shared<Node<float>>((float)pow(float_ptr_left->get_data(), float_ptr_right->get_data()));
                 return;
             }
             if(int_ptr_left) {
-                if(int_ptr_left->data == 1) {
+                if(int_ptr_left->get_data() == 1) {
                     node = std::make_shared<Node<int>>(1);
                     return;
                 }
-                else if(int_ptr_left->data == 0) {
+                else if(int_ptr_left->get_data() == 0) {
                     node = std::make_shared<Node<int>>(0);
                     return;
                 }
             }
             if(int_ptr_right) {
-                if(int_ptr_right->data == 1) {
-                    node = node->left;
+                if(int_ptr_right->get_data() == 1) {
+                    node = node->get_left();
                     return;
                 }
-                else if(int_ptr_right->data == 0) {
+                else if(int_ptr_right->get_data() == 0) {
                     node = std::make_shared<Node<int>>(1);
                     return;
                 }
             }
             if(string_ptr_right && string_ptr_left)
-                if(string_ptr_left->data == "e\0" && string_ptr_right->data == "ln\0")
-                    node = node->right->right;
-        } else if(string_ptr->data == "sin\0") {
-            auto string_ptr_arg = std::dynamic_pointer_cast<Node<std::string>>(node->right);
+                if(string_ptr_left->get_data() == "e" && string_ptr_right->get_data() == "ln")
+                    node = node->get_right()->get_right();
+        } else if(string_ptr->get_data() == "sin") {
+            auto string_ptr_arg = std::dynamic_pointer_cast<Node<std::string>>(node->get_right());
             if(string_ptr_arg)
-                if(string_ptr_arg->data == "arcsin\0")
-                    node = node->right->right;
-        } else if(string_ptr->data == "cos\0") {
-            auto string_ptr_arg = std::dynamic_pointer_cast<Node<std::string>>(node->right);
+                if(string_ptr_arg->get_data() == "arcsin")
+                    node = node->get_right()->get_right();
+        } else if(string_ptr->get_data() == "cos") {
+            auto string_ptr_arg = std::dynamic_pointer_cast<Node<std::string>>(node->get_right());
             if(string_ptr_arg)
-                if(string_ptr_arg->data == "arccos\0")
-                    node = node->right->right;
-        } else if(string_ptr->data == "tan\0") {
-            auto string_ptr_arg = std::dynamic_pointer_cast<Node<std::string>>(node->right);
+                if(string_ptr_arg->get_data() == "arccos")
+                    node = node->get_right()->get_right();
+        } else if(string_ptr->get_data() == "tan") {
+            auto string_ptr_arg = std::dynamic_pointer_cast<Node<std::string>>(node->get_right());
             if(string_ptr_arg)
-                if(string_ptr_arg->data == "arctan\0")
-                    node = node->right->right;
-        } else if(string_ptr->data == "cot\0") {
-            auto string_ptr_arg = std::dynamic_pointer_cast<Node<std::string>>(node->right);
+                if(string_ptr_arg->get_data() == "arctan")
+                    node = node->get_right()->get_right();
+        } else if(string_ptr->get_data() == "cot") {
+            auto string_ptr_arg = std::dynamic_pointer_cast<Node<std::string>>(node->get_right());
             if(string_ptr_arg)
-                if(string_ptr_arg->data == "arccot\0")
-                    node = node->right->right;
-        } else if(string_ptr->data == "arcsin\0") {
-            auto string_ptr_arg = std::dynamic_pointer_cast<Node<std::string>>(node->right);
+                if(string_ptr_arg->get_data() == "arccot")
+                    node = node->get_right()->get_right();
+        } else if(string_ptr->get_data() == "arcsin") {
+            auto string_ptr_arg = std::dynamic_pointer_cast<Node<std::string>>(node->get_right());
             if(string_ptr_arg)
-                if(string_ptr_arg->data == "sin\0")
-                    node = node->right->right;
-        } else if(string_ptr->data == "arccos\0") {
-            auto string_ptr_arg = std::dynamic_pointer_cast<Node<std::string>>(node->right);
+                if(string_ptr_arg->get_data() == "sin")
+                    node = node->get_right()->get_right();
+        } else if(string_ptr->get_data() == "arccos") {
+            auto string_ptr_arg = std::dynamic_pointer_cast<Node<std::string>>(node->get_right());
             if(string_ptr_arg)
-                if(string_ptr_arg->data == "cos\0")
-                    node = node->right->right;
-        } else if(string_ptr->data == "arctan\0") {
-            auto string_ptr_arg = std::dynamic_pointer_cast<Node<std::string>>(node->right);
+                if(string_ptr_arg->get_data() == "cos")
+                    node = node->get_right()->get_right();
+        } else if(string_ptr->get_data() == "arctan") {
+            auto string_ptr_arg = std::dynamic_pointer_cast<Node<std::string>>(node->get_right());
             if(string_ptr_arg)
-                if(string_ptr_arg->data == "tan\0")
-                    node = node->right->right;
-        } else if(string_ptr->data == "arccot\0") {
-            auto string_ptr_arg = std::dynamic_pointer_cast<Node<std::string>>(node->right);
+                if(string_ptr_arg->get_data() == "tan")
+                    node = node->get_right()->get_right();
+        } else if(string_ptr->get_data() == "arccot") {
+            auto string_ptr_arg = std::dynamic_pointer_cast<Node<std::string>>(node->get_right());
             if(string_ptr_arg)
-                if(string_ptr_arg->data == "cot\0")
-                    node = node->right->right;
+                if(string_ptr_arg->get_data() == "cot")
+                    node = node->get_right()->get_right();
         }
     }
 

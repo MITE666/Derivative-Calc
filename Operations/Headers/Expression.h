@@ -12,5 +12,6 @@ public:
     virtual ~Expression() = default;
 };
 
+extern std::shared_ptr<Expression> ExpressionType(std::shared_ptr<BaseNode>& ptr);
 
 #endif //OOP_EXPRESSION_H

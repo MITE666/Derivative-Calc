@@ -22,33 +22,33 @@ std::shared_ptr<Expression> ExpressionType(std::shared_ptr<BaseNode>& ptr) {
     std::shared_ptr<BaseNode> float_node = std::dynamic_pointer_cast<Node<float>>(ptr);
     if(int_node || float_node)
         return std::make_shared<Constant>(ptr);
-    else if(std::dynamic_pointer_cast<Node<std::string>>(ptr)->data == "+\0")
+    else if(std::dynamic_pointer_cast<Node<std::string>>(ptr)->get_data() == "+")
         return std::make_shared<Addition>(ptr);
-    else if(std::dynamic_pointer_cast<Node<std::string>>(ptr)->data == "-\0")
+    else if(std::dynamic_pointer_cast<Node<std::string>>(ptr)->get_data() == "-")
         return std::make_shared<Subtraction>(ptr);
-    else if(std::dynamic_pointer_cast<Node<std::string>>(ptr)->data == "*\0")
+    else if(std::dynamic_pointer_cast<Node<std::string>>(ptr)->get_data() == "*")
         return std::make_shared<Multiplication>(ptr);
-    else if(std::dynamic_pointer_cast<Node<std::string>>(ptr)->data == "/\0")
+    else if(std::dynamic_pointer_cast<Node<std::string>>(ptr)->get_data() == "/")
         return std::make_shared<Division>(ptr);
-    else if(std::dynamic_pointer_cast<Node<std::string>>(ptr)->data == "ln\0")
+    else if(std::dynamic_pointer_cast<Node<std::string>>(ptr)->get_data() == "ln")
         return std::make_shared<Logarithm>(ptr);
-    else if(std::dynamic_pointer_cast<Node<std::string>>(ptr)->data == "^\0")
+    else if(std::dynamic_pointer_cast<Node<std::string>>(ptr)->get_data() == "^")
         return std::make_shared<Power>(ptr);
-    else if(std::dynamic_pointer_cast<Node<std::string>>(ptr)->data == "sin\0")
+    else if(std::dynamic_pointer_cast<Node<std::string>>(ptr)->get_data() == "sin")
         return std::make_shared<Sinus>(ptr);
-    else if(std::dynamic_pointer_cast<Node<std::string>>(ptr)->data == "cos\0")
+    else if(std::dynamic_pointer_cast<Node<std::string>>(ptr)->get_data() == "cos")
         return std::make_shared<Cosinus>(ptr);
-    else if(std::dynamic_pointer_cast<Node<std::string>>(ptr)->data == "tan\0")
+    else if(std::dynamic_pointer_cast<Node<std::string>>(ptr)->get_data() == "tan")
         return std::make_shared<Tangent>(ptr);
-    else if(std::dynamic_pointer_cast<Node<std::string>>(ptr)->data == "cot\0")
+    else if(std::dynamic_pointer_cast<Node<std::string>>(ptr)->get_data() == "cot")
         return std::make_shared<Cotangent>(ptr);
-    else if(std::dynamic_pointer_cast<Node<std::string>>(ptr)->data == "arcsin\0")
+    else if(std::dynamic_pointer_cast<Node<std::string>>(ptr)->get_data() == "arcsin")
         return std::make_shared<Arcsinus>(ptr);
-    else if(std::dynamic_pointer_cast<Node<std::string>>(ptr)->data == "arccos\0")
+    else if(std::dynamic_pointer_cast<Node<std::string>>(ptr)->get_data() == "arccos")
         return std::make_shared<Arccosinus>(ptr);
-    else if(std::dynamic_pointer_cast<Node<std::string>>(ptr)->data == "arctan\0")
+    else if(std::dynamic_pointer_cast<Node<std::string>>(ptr)->get_data() == "arctan")
         return std::make_shared<Arctangent>(ptr);
-    else if(std::dynamic_pointer_cast<Node<std::string>>(ptr)->data == "arccot\0")
+    else if(std::dynamic_pointer_cast<Node<std::string>>(ptr)->get_data() == "arccot")
         return std::make_shared<Arccotangent>(ptr);
     else
         return std::make_shared<Variable>(ptr);
