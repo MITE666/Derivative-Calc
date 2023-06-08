@@ -37,7 +37,6 @@ public:
     explicit Tree(std::string &expression_);
     void Convert();
     friend std::ostream &operator<<(std::ostream &os, const Tree &tree_);
-    static void Simplify(std::shared_ptr<BaseNode>& node);
 };
 
 

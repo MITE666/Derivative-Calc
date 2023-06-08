@@ -8,6 +8,7 @@ class Multiplication : public Expression {
 public:
     explicit Multiplication(std::shared_ptr<BaseNode>& exp_);
     void Differentiate(std::string &var) override;
+    void Simplify() override;
 };
 
 

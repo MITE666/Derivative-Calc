@@ -7,3 +7,5 @@ void Constant::Differentiate(std::string &var) {
         return;
     exp = std::make_shared<Node<int>>(0);
 }
+
+void Constant::Simplify() { }

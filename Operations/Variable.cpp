@@ -8,3 +8,5 @@ void Variable::Differentiate(std::string &var) {
     else
         exp = std::make_shared<Node<int>>(0);
 }
+
+void Variable::Simplify() { }

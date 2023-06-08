@@ -12,3 +12,14 @@ void Sinus::Differentiate(std::string &var) {
     new_exp->get_right()->set_right(arg);
     exp = new_exp;
 }
+
+void Sinus::Simplify() {
+    if (exp->get_right() != nullptr) {
+        auto expression = ExpressionType(exp->get_right());
+        expression->Simplify();
+    }
+    auto string_ptr_arg = std::dynamic_pointer_cast<Node<std::string>>(exp->get_right());
+    if(string_ptr_arg)
+        if(string_ptr_arg->get_data() == "arcsin")
+            exp = exp->get_right()->get_right();
+}

@@ -61,11 +61,10 @@ int main() {
     std::cout << "In baza carei variabile doriti sa derivati?\n";
     std::getline(std::cin, variable);
     Tree expression {expr};
-    Tree::Simplify(expression.root);
     //std::cout << expression << "\n";
     std::shared_ptr<Expression> deriv = ExpressionType(expression.root);
     deriv->Differentiate(variable);
-    Tree::Simplify(expression.root);
+    deriv->Simplify();
     std::cout << *expression.root;
     int exit;
     std::cout << "\nscrieti 0 pentru a termina programul\n";

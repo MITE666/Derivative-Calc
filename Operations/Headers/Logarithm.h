@@ -8,6 +8,7 @@ class Logarithm : public Expression {
 public:
     explicit Logarithm(std::shared_ptr<BaseNode>& exp_);
     void Differentiate(std::string &var) override;
+    void Simplify() override;
 };
 
 

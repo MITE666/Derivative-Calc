@@ -9,8 +9,8 @@ private:
     virtual void PrintNode(std::ostream &os) const = 0;
     std::shared_ptr<BaseNode> left;
     std::shared_ptr<BaseNode> right;
-public:
     static int nr_parentheses;
+public:
     BaseNode();
     friend std::ostream &operator<<(std::ostream &os, const BaseNode& baseNode_);
     [[nodiscard]] virtual std::shared_ptr<BaseNode> clone() const = 0;
